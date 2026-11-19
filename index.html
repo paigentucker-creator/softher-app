@@ -289,6 +289,30 @@
   .sessions a { display: inline-block; margin-top: 20px; background: var(--rose); color: var(--brown); text-decoration: none; font-weight: 500; font-size: 14px; letter-spacing: 0.06em; padding: 13px 30px; border-radius: 99px; }
   .sessions a:hover { background: var(--deep); color: var(--cream); }
 
+  .nt-filters { display:flex; flex-direction:column; gap:10px; margin-bottom:6px; }
+  .nt-filters .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .nt-filters .lab { font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--taupe); min-width:70px; }
+  .chip.sel { background: var(--rose); border-color: var(--rose); color: var(--brown); }
+  .nt-pick { margin-top:16px; background:var(--brown); color:var(--cream); border-radius:18px; padding:22px 26px; font-family:'Playfair Display',serif; font-size:24px; }
+  .nt-pick small { display:block; font-family:'Jost',sans-serif; font-size:13px; color:var(--taupe); margin-top:6px; }
+  .nt-row { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #EFE5DA; border-radius:14px; padding:12px 16px; margin-top:8px; }
+  .nt-row .t { flex:1; font-size:15px; }
+  .nt-row .t small { display:block; color:#8A7B6F; font-weight:300; font-size:12px; margin-top:2px; }
+  .nt-row.done .t { text-decoration:line-through; opacity:.55; }
+  .nt-row .x { background:none; border:none; color:var(--taupe); font-size:20px; cursor:pointer; }
+  .nt-row .go { background:none; border:1px solid var(--taupe); border-radius:99px; color:var(--deep); font-size:12px; padding:5px 12px; cursor:pointer; font-family:'Jost',sans-serif; }
+  .nt-form { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .nt-form input[type=text] { flex:1; min-width:180px; }
+  .nt-form input, .nt-form select { border:1px solid #EFE5DA; border-radius:99px; background:#fff; padding:11px 16px; font-family:'Jost',sans-serif; font-size:14px; color:var(--ink); outline:none; }
+  .nt-hint { font-weight:300; color:#8A7B6F; font-size:14px; max-width:560px; margin-top:8px; }
+  .nt-summary { display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+  .nt-summary .box { flex:1; min-width:140px; background:#fff; border:1px solid #EFE5DA; border-radius:14px; padding:14px 18px; }
+  .nt-summary .box b { display:block; font-family:'Playfair Display',serif; font-weight:400; font-size:28px; color:var(--deep); }
+  .nt-summary .box span { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8A7B6F; }
+  .bp-field { margin-top:22px; }
+  .bp-field label { display:block; font-family:'Playfair Display',serif; font-size:19px; color:var(--brown); margin-bottom:4px; }
+  .bp-field p { font-weight:300; color:#8A7B6F; font-size:13px; margin-bottom:8px; }
+  .flag { color:var(--deep); font-size:12px; }
 </style>
 </head>
 <body>
@@ -411,6 +435,70 @@
       <p>"Joy is not something you find. It's something you choose."</p>
       <small>softHer™ · Let go. Live fully. Lead softer.</small>
     </div>
+  </div>
+
+  <div id="jm-view" class="view">
+    <button class="back" onclick="goHome()">← Back home</button>
+    <img class="jj-banner" src="images/joymenu.jpg" alt="Joy Menu" style="height:210px; object-fit:cover;">
+    <div class="mr-head"><div><h2>Joy Menu</h2><p>Your personal menu of things that bring you alive. Pick by mood, time and energy when you need a reset.</p></div></div>
+    <div class="section-label" style="margin:26px 0 4px;">What do I need right now?</div>
+    <div class="nt-filters" id="jm-filters"></div>
+    <button class="mr-add" onclick="jmSurprise()">Surprise me</button>
+    <div class="nt-pick" id="jm-pick" style="display:none;"></div>
+    <div class="section-label" style="margin:32px 0 4px;">My joy menu</div>
+    <div id="jm-list"></div>
+    <div class="nt-form">
+      <input type="text" id="jm-name" placeholder="Add something that brings you joy...">
+      <select id="jm-mood"><option>Calm</option><option>Playful</option><option>Social</option><option>Creative</option><option>Energized</option></select>
+      <select id="jm-time"><option>5 minutes</option><option>30 minutes</option><option>2+ hours</option></select>
+      <select id="jm-energy"><option>Low energy</option><option>Medium energy</option><option>High energy</option></select>
+      <button class="mr-add" style="margin:0;" onclick="jmAdd()">Add</button>
+    </div>
+    <div class="section-label" style="margin:26px 0 4px;">Need ideas? Tap to add</div>
+    <div class="chips" id="jm-ideas"></div>
+  </div>
+
+  <div id="ad-view" class="view">
+    <button class="back" onclick="goHome()">← Back home</button>
+    <img class="jj-banner" src="images/admin.jpg" alt="Life Admin" style="height:210px; object-fit:cover;">
+    <div class="mr-head"><div><h2>Life Admin</h2><p>A simple space for appointments, errands, and whatever is weighing on your mind.</p></div></div>
+    <div class="section-label" style="margin:26px 0 4px;">On my mind</div>
+    <p class="nt-hint">Dump it here. Then move what is real into errands or appointments, and let the rest go.</p>
+    <div id="ad-mind"></div>
+    <div class="nt-form"><input type="text" id="ad-mind-in" placeholder="What is weighing on you?"><button class="mr-add" style="margin:0;" onclick="adAddMind()">Add</button></div>
+    <div class="section-label" style="margin:32px 0 4px;">Errands</div>
+    <div id="ad-errands"></div>
+    <div class="nt-form"><input type="text" id="ad-err-in" placeholder="Add an errand..."><button class="mr-add" style="margin:0;" onclick="adAddErrand()">Add</button></div>
+    <div class="section-label" style="margin:32px 0 4px;">Appointments</div>
+    <div id="ad-appts"></div>
+    <div class="nt-form"><input type="text" id="ad-ap-in" placeholder="Appointment..."><input type="date" id="ad-ap-date"><button class="mr-add" style="margin:0;" onclick="adAddAppt()">Add</button></div>
+  </div>
+
+  <div id="sc-view" class="view">
+    <button class="back" onclick="goHome()">← Back home</button>
+    <img class="jj-banner" src="images/softcircle.jpg" alt="Soft Circle" style="height:210px; object-fit:cover; object-position:center 22%;">
+    <div class="mr-head"><div><h2>Soft Circle</h2><p>Your people, your energy. Notice who pours back, and make room for them.</p></div></div>
+    <div class="nt-summary" id="sc-summary"></div>
+    <div class="section-label" style="margin:26px 0 4px;">My relationship energy map</div>
+    <div id="sc-people"></div>
+    <div class="nt-form">
+      <input type="text" id="sc-name" placeholder="Name...">
+      <select id="sc-feel"><option>Fills me up</option><option>Neutral</option><option>Drains me</option></select>
+      <input type="date" id="sc-last" title="Last time we connected">
+      <button class="mr-add" style="margin:0;" onclick="scAddPerson()">Add</button>
+    </div>
+    <p class="nt-hint">The date is the last time you connected. People you have not reached in 30+ days are flagged.</p>
+    <div class="section-label" style="margin:32px 0 4px;">Social plans</div>
+    <div id="sc-plans"></div>
+    <div class="nt-form"><input type="text" id="sc-plan-in" placeholder="A plan with someone who pours back..."><input type="date" id="sc-plan-date"><button class="mr-add" style="margin:0;" onclick="scAddPlan()">Add</button></div>
+  </div>
+
+  <div id="bp-view" class="view">
+    <button class="back" onclick="goHome()">← Back home</button>
+    <img class="jj-banner" src="images/blueprint.jpg" alt="My Softer Life Blueprint" style="height:230px; object-fit:cover;">
+    <div class="mr-head"><div><h2>My Softer Life Blueprint</h2><p>The plan you build through the program. Your north star document. It saves as you write.</p></div></div>
+    <div class="nt-summary" id="bp-auto"></div>
+    <div id="bp-fields"></div>
   </div>
 
   <div id="section-view" class="view">
@@ -731,6 +819,10 @@
     if (id === 'morning') { openMorning(); return; }
     if (id === 'skincare') { openSkincare(); return; }
     if (id === 'movement') { openMovement(); return; }
+    if (id === 'joymenu') { openJoyMenu(); return; }
+    if (id === 'admin') { openAdmin(); return; }
+    if (id === 'circle') { openCircle(); return; }
+    if (id === 'blueprint') { openBlueprint(); return; }
     if (id === 'practice') {
       if (!store.get('baselineDone', false)) { showView('jj-welcome'); return; }
       const done = store.get('completed', []);
@@ -1516,6 +1608,122 @@
     cbtn.textContent = count === 0 ? 'Begin Day 1' : 'Continue Day ' + today;
   }
   refreshProgress();
+
+  /* ===== Joy Menu, Life Admin, Soft Circle, Blueprint ===== */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  function fmtDate(d) { if (!d) return ''; const [y,m,dd] = d.split('-').map(Number); return new Date(y, m-1, dd).toLocaleDateString(undefined, {month:'short', day:'numeric'}); }
+  function rowHtml(text, sub, extra) { return '<div class="nt-row">' + extra.pre + '<div class="t">' + esc(text) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' + extra.post + '</div>'; }
+
+  /* Joy Menu */
+  const JM_MOODS = ['Calm','Playful','Social','Creative','Energized'];
+  const JM_TIMES = ['5 minutes','30 minutes','2+ hours'];
+  const JM_ENERGY = ['Low energy','Medium energy','High energy'];
+  const JM_IDEAS = [
+    ['Dance to one whole song','Playful','5 minutes','Medium energy'],
+    ['Sit outside with a warm drink','Calm','5 minutes','Low energy'],
+    ['Call a friend who makes me laugh','Social','30 minutes','Low energy'],
+    ['Walk with no destination','Calm','30 minutes','Medium energy'],
+    ['Try a new cafe','Social','2+ hours','Medium energy'],
+    ['Make something with my hands','Creative','2+ hours','Medium energy'],
+    ['Put on a favorite playlist and tidy one drawer','Energized','30 minutes','High energy'],
+    ['Take photos of things that look beautiful','Creative','30 minutes','Low energy']
+  ];
+  let jmF = {mood: '', time: '', energy: ''};
+  function openJoyMenu() { jmRender(); showView('jm-view'); }
+  function jmRender() {
+    const f = document.getElementById('jm-filters');
+    const mk = (lab, key, opts) => '<div class="row"><span class="lab">' + lab + '</span>' + opts.map(o => '<button class="chip' + (jmF[key] === o ? ' sel' : '') + '" onclick="jmSet(\'' + key + '\',\'' + o + '\')">' + o + '</button>').join('') + '</div>';
+    f.innerHTML = mk('Mood','mood',JM_MOODS) + mk('Time','time',JM_TIMES) + mk('Energy','energy',JM_ENERGY);
+    const items = store.get('joyItems', []);
+    const list = document.getElementById('jm-list');
+    const ok = it => (!jmF.mood || it.mood === jmF.mood) && (!jmF.time || it.time === jmF.time) && (!jmF.energy || it.energy === jmF.energy);
+    const shown = items.filter(ok);
+    list.innerHTML = items.length ? '' : '<p class="nt-hint">Nothing here yet. Add your own below, or tap an idea.</p>';
+    items.forEach((it, i) => {
+      if (!ok(it)) return;
+      list.innerHTML += rowHtml(it.name, it.mood + ' · ' + it.time + ' · ' + it.energy, {pre: '', post: '<button class="x" onclick="jmDel(' + i + ')" aria-label="Remove">×</button>'});
+    });
+    if (items.length && !shown.length) list.innerHTML = '<p class="nt-hint">Nothing matches that combination yet. Try fewer filters or add something new.</p>';
+    document.getElementById('jm-ideas').innerHTML = JM_IDEAS.map((x, i) => '<button class="chip" onclick="jmIdea(' + i + ')">' + esc(x[0]) + '</button>').join('');
+  }
+  function jmMatches() { return store.get('joyItems', []).filter(it => (!jmF.mood || it.mood === jmF.mood) && (!jmF.time || it.time === jmF.time) && (!jmF.energy || it.energy === jmF.energy)); }
+  function jmSet(k, v) { jmF[k] = jmF[k] === v ? '' : v; document.getElementById('jm-pick').style.display = 'none'; jmRender(); }
+  function jmSurprise() {
+    const m = jmMatches(), box = document.getElementById('jm-pick');
+    box.style.display = 'block';
+    if (!m.length) { box.innerHTML = 'Add a few favorites first.<small>Your menu is empty for this combination.</small>'; return; }
+    const it = m[Math.floor(Math.random() * m.length)];
+    box.innerHTML = esc(it.name) + '<small>' + esc(it.mood) + ' · ' + esc(it.time) + ' · ' + esc(it.energy) + '</small>';
+  }
+  function jmAdd() {
+    const n = document.getElementById('jm-name'); if (!n.value.trim()) return;
+    const items = store.get('joyItems', []);
+    items.push({name: n.value.trim(), mood: document.getElementById('jm-mood').value, time: document.getElementById('jm-time').value, energy: document.getElementById('jm-energy').value});
+    store.set('joyItems', items); n.value = ''; jmRender();
+  }
+  function jmIdea(i) { const x = JM_IDEAS[i], items = store.get('joyItems', []); items.push({name: x[0], mood: x[1], time: x[2], energy: x[3]}); store.set('joyItems', items); jmRender(); }
+  function jmDel(i) { const items = store.get('joyItems', []); items.splice(i, 1); store.set('joyItems', items); jmRender(); }
+
+  /* Life Admin */
+  function openAdmin() { adRender(); showView('ad-view'); }
+  function adRender() {
+    const mind = store.get('adMind', []), errs = store.get('adErrands', []), aps = store.get('adAppts', []).slice().sort((a, b) => (a.date || '9').localeCompare(b.date || '9'));
+    document.getElementById('ad-mind').innerHTML = mind.length ? mind.map((t, i) => rowHtml(t, '', {pre: '', post: '<button class="go" onclick="adToErrand(' + i + ')">Make it an errand</button><button class="x" onclick="adDel(\'adMind\',' + i + ')" aria-label="Let it go">×</button>'})).join('') : '<p class="nt-hint">Clear for now.</p>';
+    document.getElementById('ad-errands').innerHTML = errs.length ? errs.map((e, i) => rowHtml(e.t, '', {pre: '<button class="mr-check' + (e.done ? ' on' : '') + '" onclick="adToggle(' + i + ')" aria-label="Done"></button>', post: '<button class="x" onclick="adDel(\'adErrands\',' + i + ')" aria-label="Remove">×</button>'}).replace('nt-row"', 'nt-row' + (e.done ? ' done' : '') + '"')).join('') : '<p class="nt-hint">No errands.</p>';
+    const all = store.get('adAppts', []);
+    document.getElementById('ad-appts').innerHTML = aps.length ? aps.map(a => rowHtml(a.t, fmtDate(a.date), {pre: '', post: '<button class="x" onclick="adDel(\'adAppts\',' + all.indexOf(a) + ')" aria-label="Remove">×</button>'})).join('') : '<p class="nt-hint">No appointments.</p>';
+  }
+  function adAddMind() { const i = document.getElementById('ad-mind-in'); if (!i.value.trim()) return; const a = store.get('adMind', []); a.push(i.value.trim()); store.set('adMind', a); i.value = ''; adRender(); }
+  function adAddErrand() { const i = document.getElementById('ad-err-in'); if (!i.value.trim()) return; const a = store.get('adErrands', []); a.push({t: i.value.trim(), done: false}); store.set('adErrands', a); i.value = ''; adRender(); }
+  function adAddAppt() { const i = document.getElementById('ad-ap-in'); if (!i.value.trim()) return; const a = store.get('adAppts', []); a.push({t: i.value.trim(), date: document.getElementById('ad-ap-date').value}); store.set('adAppts', a); i.value = ''; document.getElementById('ad-ap-date').value = ''; adRender(); }
+  function adToErrand(i) { const m = store.get('adMind', []), e = store.get('adErrands', []); e.push({t: m[i], done: false}); m.splice(i, 1); store.set('adMind', m); store.set('adErrands', e); adRender(); }
+  function adToggle(i) { const e = store.get('adErrands', []); e[i].done = !e[i].done; store.set('adErrands', e); adRender(); }
+  function adDel(k, i) { const a = store.get(k, []); a.splice(i, 1); store.set(k, a); adRender(); }
+
+  /* Soft Circle */
+  function openCircle() { scRender(); showView('sc-view'); }
+  function scDays(d) { if (!d) return null; const [y,m,dd] = d.split('-').map(Number); return Math.floor((Date.now() - new Date(y, m-1, dd).getTime()) / 864e5); }
+  function scRender() {
+    const ppl = store.get('scPeople', []), plans = store.get('scPlans', []).slice().sort((a, b) => (a.date || '9').localeCompare(b.date || '9'));
+    const cnt = k => ppl.filter(p => p.feel === k).length;
+    document.getElementById('sc-summary').innerHTML = '<div class="box"><b>' + cnt('Fills me up') + '</b><span>Fill me up</span></div><div class="box"><b>' + cnt('Neutral') + '</b><span>Neutral</span></div><div class="box"><b>' + cnt('Drains me') + '</b><span>Drain me</span></div>';
+    const order = {'Fills me up': 0, 'Neutral': 1, 'Drains me': 2};
+    document.getElementById('sc-people').innerHTML = ppl.length ? ppl.map((p, i) => ({p, i})).sort((a, b) => order[a.p.feel] - order[b.p.feel]).map(({p, i}) => {
+      const d = scDays(p.last), stale = d !== null && d >= 30 && p.feel === 'Fills me up';
+      return rowHtml(p.name, p.feel + (p.last ? ' · last connected ' + fmtDate(p.last) : ''), {pre: '', post: (stale ? '<span class="flag">Reach out</span>' : '') + '<button class="go" onclick="scTouch(' + i + ')">Connected today</button><button class="x" onclick="scDel(\'scPeople\',' + i + ')" aria-label="Remove">×</button>'});
+    }).join('') : '<p class="nt-hint">Add the people in your life and how you feel after time with them.</p>';
+    const all = store.get('scPlans', []);
+    document.getElementById('sc-plans').innerHTML = plans.length ? plans.map(p => rowHtml(p.t, fmtDate(p.date), {pre: '', post: '<button class="x" onclick="scDel(\'scPlans\',' + all.indexOf(p) + ')" aria-label="Remove">×</button>'})).join('') : '<p class="nt-hint">No plans yet.</p>';
+  }
+  function scAddPerson() { const n = document.getElementById('sc-name'); if (!n.value.trim()) return; const a = store.get('scPeople', []); a.push({name: n.value.trim(), feel: document.getElementById('sc-feel').value, last: document.getElementById('sc-last').value}); store.set('scPeople', a); n.value = ''; document.getElementById('sc-last').value = ''; scRender(); }
+  function scAddPlan() { const n = document.getElementById('sc-plan-in'); if (!n.value.trim()) return; const a = store.get('scPlans', []); a.push({t: n.value.trim(), date: document.getElementById('sc-plan-date').value}); store.set('scPlans', a); n.value = ''; document.getElementById('sc-plan-date').value = ''; scRender(); }
+  function scTouch(i) { const a = store.get('scPeople', []); const d = new Date(); a[i].last = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); store.set('scPeople', a); scRender(); }
+  function scDel(k, i) { const a = store.get(k, []); a.splice(i, 1); store.set(k, a); scRender(); }
+
+  /* Blueprint */
+  const BP_FIELDS = [
+    ['word', 'My word for this season', 'One word that tells you who you are becoming.'],
+    ['leak', 'What I am letting go of', 'From your Joy Leak Audit: the commitments and habits draining you.'],
+    ['weekend', 'My softer weekend', 'What a restorative weekend looks like for you.'],
+    ['morning', 'My unhurried morning ritual', 'The first hour that belongs to you.'],
+    ['people', 'Who I am making room for', 'The people who pour back, and how you will show up for them.'],
+    ['boundary', 'My boundaries', 'What you are protecting, and the sentence you will use to protect it.'],
+    ['commit', 'My 28 day joy commitment', 'One realistic promise you can keep. Not a perfect one.']
+  ];
+  function openBlueprint() {
+    const b = store.get('baseline', {}), sum = Object.values(b).reduce((a, v) => a + (Number(v) || 0), 0);
+    const items = store.get('joyItems', []).slice(0, 3);
+    document.getElementById('bp-auto').innerHTML =
+      '<div class="box"><b>' + (store.get('baselineDone', false) ? sum + ' / 25' : '—') + '</b><span>Joy baseline</span></div>' +
+      '<div class="box"><b>' + store.get('completed', []).length + ' / 28</b><span>Days completed</span></div>' +
+      '<div class="box" style="flex:2;"><b style="font-size:16px; font-family:Jost,sans-serif;">' + (items.length ? items.map(i => esc(i.name)).join(' · ') : 'Add to your Joy Menu') + '</b><span>My joy menu, top three</span></div>';
+    const saved = store.get('blueprint', {});
+    const wrap = document.getElementById('bp-fields');
+    wrap.innerHTML = BP_FIELDS.map(f => '<div class="bp-field"><label>' + f[1] + '</label><p>' + f[2] + '</p><textarea class="soft" id="bp-' + f[0] + '" oninput="bpSave()">' + esc(saved[f[0]] || '') + '</textarea></div>').join('');
+    showView('bp-view');
+  }
+  function bpSave() { const o = {}; BP_FIELDS.forEach(f => { o[f[0]] = document.getElementById('bp-' + f[0]).value; }); store.set('blueprint', o); }
 </script>
 
 </body>
